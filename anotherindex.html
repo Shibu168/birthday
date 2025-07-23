@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday My Love!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #5a2d82;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: #000;
+        }
+
+        /* Countdown Page */
+        #countdown-page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            z-index: 100;
+            transition: opacity 1s, transform 1s;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .countdown-container {
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            max-width: 800px;
+            width: 90%;
+        }
+
+        .countdown-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5rem;
+            color: #fff;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .countdown-subtitle {
+            font-size: 1.5rem;
+            color: #ffcc00;
+            margin-bottom: 40px;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .countdown-unit {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            min-width: 120px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        }
+
+        .countdown-value {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .countdown-label {
+            font-size: 1.2rem;
+            color: #ffcc00;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .skip-btn {
+            background: linear-gradient(45deg, #e84393, #fd79a8);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 5px 25px rgba(232, 67, 147, 0.6);
+            margin-top: 20px;
+        }
+
+        .skip-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(232, 67, 147, 0.8);
+        }
+
+        .skip-btn:active {
+            transform: translateY(0);
+        }
+        .activate-btn {
+            background: linear-gradient(45deg, #e84393, #fd79a8);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            box-shadow: 0 5px 25px rgba(232, 67, 147, 0.6);
+            margin-top: 20px;
+        }
+
+        .activate-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(232, 67, 147, 0.8);
+        }
+
+        .activate-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Celebration Page */
+        #celebration-page {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0, #a1c4fd, #c2e9fb);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            margin: 50px auto;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53, #ffafbd, #ffc3a0, #ffd8cb);
+            z-index: -1;
+            border-radius: 25px;
+            animation: borderGlow 3s infinite alternate;
+        }
+
+        @keyframes borderGlow {
+            0% { filter: blur(15px) opacity(0.7); }
+            100% { filter: blur(25px) opacity(1); }
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5rem;
+            margin-bottom: 10px;
+            color: #e84393;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s infinite;
+        }
+
+        .heart {
+            color: #e84393;
+            display: inline-block;
+            animation: heartbeat 1.2s infinite;
+            margin: 0 10px;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 15px;
+            border-radius: 50px;
+            margin: 20px auto;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 12px 25px;
+            margin: 0 5px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #5a2d82;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(45deg, #e84393, #fd79a8);
+            color: white;
+            box-shadow: 0 5px 15px rgba(232, 67, 147, 0.4);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: rgba(232, 67, 147, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .message {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin: 20px 0;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            position: relative;
+            text-align: center;
+        }
+
+        .message::before {
+            content: """;
+            font-family: 'Dancing Script', cursive;
+            font-size: 6rem;
+            position: absolute;
+            top: -30px;
+            left: 10px;
+            color: rgba(232, 67, 147, 0.3);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .action-btn {
+        background: linear-gradient(45deg, #e84393, #fd79a8);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        font-weight: 600;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+
+        .action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-btn:active {
+            transform: translateY(0);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.1rem;
+            color: #6c5ce7;
+            background: rgba(255, 255, 255, 0.5);
+            margin-top: 20px;
+        }
+
+        .firework {
+            position: fixed;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .flower {
+            position: fixed;
+            font-size: 1.5rem;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0.8;
+        }
+
+        .floating {
+            position: fixed;
+            font-size: 1.5rem;
+            animation: float 8s infinite ease-in-out;
+            opacity: 0.7;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-40px) rotate(20deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        .photo-placeholder {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 20px auto;
+            background: linear-gradient(45deg, #ffafbd, #ffc3a0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .photo-placeholder i {
+            font-size: 5rem;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            h1, .countdown-title { font-size: 3rem; }
+            .tabs { flex-wrap: wrap; }
+            .tab-btn { margin: 5px; padding: 10px 15px; }
+            .countdown-unit { min-width: 80px; padding: 15px 10px; }
+            .countdown-value { font-size: 2.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            h1, .countdown-title { font-size: 2.5rem; }
+            .countdown-timer { gap: 10px; }
+            .countdown-unit { min-width: 70px; }
+            .countdown-value { font-size: 2rem; }
+            .countdown-label { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Countdown Page -->
+    <div id="countdown-page">
+        <div class="countdown-container">
+            <h1 class="countdown-title">Happy Birthday My Love!</h1>
+            <p class="countdown-subtitle">The celebration starts in...</p>
+            
+            <div class="countdown-timer">
+                <div class="countdown-unit">
+                    <div class="countdown-value" id="days">00</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-unit">
+                    <div class="countdown-value" id="hours">00</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-unit">
+                    <div class="countdown-value" id="minutes">00</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-unit">
+                    <div class="countdown-value" id="seconds">00</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
+            
+            <!-- <button class="skip-btn" id="skip-countdown">
+                Start Celebration Now! <i class="fas fa-gift"></i>
+            </button> -->
+
+            <button id="activate-celebration" class="activate-btn">
+                🎉 Start the Celebration! <i class="fas fa-gift"></i>
+            </button>
+            
+
+        </div>
+    </div>
+    
+    <!-- Celebration Page -->
+    <div id="celebration-page">
+        <!-- Floating elements -->
+        <div class="floating" style="top: 10%; left: 5%;">❤</div>
+        <div class="floating" style="top: 15%; left: 90%;">🌸</div>
+        <div class="floating" style="top: 30%; left: 15%; animation-delay: -2s;">🌹</div>
+        <div class="floating" style="top: 70%; left: 80%; animation-delay: -3s;">🌷</div>
+        <div class="floating" style="top: 85%; left: 10%; animation-delay: -4s;">🌺</div>
+        <div class="floating" style="top: 40%; left: 50%; animation-delay: -1s;">💐</div>
+        
+        <div class="container">
+            <header>
+                <h1>Happy Birthday <span class="heart">❤</span> My Love</h1>
+                <p>To the most amazing woman in the world on her special day!</p>
+                
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="wishes">Birthday Wishes</button>
+                    <button class="tab-btn" data-tab="memories">Our Memories</button>
+                    <button class="tab-btn" data-tab="surprise">Special Surprise</button>
+                </div>
+            </header>
+            
+            <!-- Birthday Wishes Tab -->
+            <div class="tab-content active" id="wishes">
+                <div class="photo-placeholder">
+                    <i class="fas fa-heart"></i>
+                </div>
+                
+                <div class="message">
+                    My dearest love,<br><br>
+                    On your special day, I want to express how incredibly grateful I am to have you in my life. 
+                    Your smile lights up my world, your laughter is my favorite melody, and your love is the greatest gift I've ever received.<br><br>
+                    May this year bring you endless joy, beautiful moments, and dreams that come true. 
+                    I promise to cherish every moment with you and make you feel loved every single day.<br><br>
+                    Happy Birthday to the woman who makes my heart skip a beat!
+                </div>
+                
+                <div class="controls">
+                    <button class="action-btn" id="fireworksBtn">
+                        <i class="fas fa-fire"></i> Launch Fireworks
+                    </button>
+                    <button class="action-btn" id="flowersBtn">
+                        <i class="fas fa-spa"></i> Shower of Flowers
+                    </button>
+                    <button class="action-btn" id="heartBtn">
+                        <i class="fas fa-heart"></i> Send Love
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Our Memories Tab -->
+            <div class="tab-content" id="memories">
+                <div class="message">
+                    It all began with a simple follow request... twice. 😅<br><br>
+                    I still remember how you asked, “Why did you send it again?” — and honestly, I didn’t know then that one little tap would start something so beautiful.<br><br>
+                    From that small moment on Instagram to the countless chats and endless smiles, you’ve become someone I never imagined I'd be lucky enough to have.<br><br>
+                    We may be miles apart, but our connection is stronger than any distance. Every message, every laugh, every little moment with you feels magical.<br><br>
+                    Here's to how it all started — and to everything beautiful that lies ahead. 💖
+                </div>
+
+                <div class="controls">
+                    <button class="action-btn" id="memoryFireworks">
+                        <i class="fas fa-fire"></i> Celebration Fireworks
+                    </button>
+                    <button class="action-btn" id="romanticMessage">
+                        <i class="fas fa-comment"></i> Message
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Special Surprise Tab -->
+            <div class="tab-content" id="surprise">
+                <div class="message">
+                    <h2>A Special Surprise Just For You</h2>
+                    <p>You deserve all the beauty in the world, my love. Click below to see something special I created just for you!</p>
+                </div>
+                
+                <div class="controls" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+                    <div style="text-align: center;">
+                        <button class="action-btn" id="viewFlower1Btn" style="margin: 10px;">
+                            🌸 View Flower 1
+                        </button>
+
+                        <button class="action-btn" id="viewFlower2Btn" style="margin: 10px;">
+                            🌼 View Flower 2
+                        </button>
+                    </div>
+                </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Made with <i class="fas fa-heart" style="color:#e84393"></i> for the most special person in my life
+            </div>
+        </div>
+    </div>
+
+<script>
+    const countdownPage = document.getElementById('countdown-page');
+    const celebrationPage = document.getElementById('celebration-page');
+    const activateBtn = document.getElementById('activate-celebration');
+
+    // 🎯 Target date (23 July 2025, 8:45 PM)
+    const birthdayDate = new Date(2025, 6, 24, 0, 0, 0);
+
+    let celebrationStarted = false;
+    let countdownEnded = false;
+
+    function updateCountdown() {
+        const now = new Date();
+        const diff = birthdayDate - now;
+
+        if (diff <= 0) {
+            if (!countdownEnded) {
+                showZeroCountdown();
+                activateBtn.style.display = 'block';
+                countdownEnded = true;
+            }
+            return; // Stop updating further
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById('days').textContent = String(days).padStart(2, '0');
+        document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+        document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+        setTimeout(updateCountdown, 1000);
+    }
+
+    function showZeroCountdown() {
+        document.getElementById('days').textContent = "00";
+        document.getElementById('hours').textContent = "00";
+        document.getElementById('minutes').textContent = "00";
+        document.getElementById('seconds').textContent = "00";
+    }
+
+    function startCelebration() {
+        if (celebrationStarted) return;
+
+        celebrationStarted = true;
+        countdownPage.style.opacity = '0';
+        countdownPage.style.transform = 'scale(1.2)';
+
+        setTimeout(() => {
+            countdownPage.style.display = 'none';
+            celebrationPage.style.display = 'block';
+            createFireworks(50);
+            createFlowers(30);
+            createHearts(20);
+        }, 1000);
+    }
+
+    activateBtn.addEventListener('click', startCelebration);
+    updateCountdown();
+
+        
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and content
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Show corresponding content
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Fireworks effect
+        function createFireworks(count) {
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const firework = document.createElement('div');
+                    firework.classList.add('firework');
+                    
+                    // Random position
+                    const x = Math.random() * window.innerWidth;
+                    const y = Math.random() * window.innerHeight;
+                    firework.style.left = `${x}px`;
+                    firework.style.top = `${y}px`;
+                    
+                    // Random color
+                    const colors = ['#ff6b6b', '#ff8e53', '#e84393', '#6c5ce7', '#00cec9'];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    firework.style.backgroundColor = color;
+                    
+                    document.body.appendChild(firework);
+                    
+                    // Animate the firework
+                    const size = 5 + Math.random() * 15;
+                    firework.animate([
+                        { transform: 'scale(0)', opacity: 1 },
+                        { transform: `scale(${size})`, opacity: 0 }
+                    ], {
+                        duration: 1000 + Math.random() * 1000,
+                        easing: 'cubic-bezier(0, 0.9, 0.57, 1)'
+                    });
+                    
+                    // Remove after animation
+                    setTimeout(() => {
+                        if (firework.parentNode) {
+                            document.body.removeChild(firework);
+                        }
+                    }, 2000);
+                }, i * 100);
+            }
+        }
+        
+        // Flowers effect
+        function createFlowers(count) {
+            const flowerIcons = ['🌸', '🌹', '🌺', '🌻', '🌷', '💐', '🥀'];
+            
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const flower = document.createElement('div');
+                    flower.classList.add('flower');
+                    flower.innerHTML = flowerIcons[Math.floor(Math.random() * flowerIcons.length)];
+                    
+                    // Random start position (top of screen)
+                    const startX = Math.random() * window.innerWidth;
+                    flower.style.left = `${startX}px`;
+                    flower.style.top = '-50px';
+                    
+                    document.body.appendChild(flower);
+                    
+                    // Random end position (bottom of screen)
+                    const endY = window.innerHeight + 50;
+                    const endX = startX + (Math.random() * 200 - 100); // Slight horizontal movement
+                    
+                    // Animate falling
+                    flower.animate([
+                        { transform: 'translate(0, 0) rotate(0deg)', opacity: 0.9 },
+                        { transform: `translate(${endX - startX}px, ${endY}px) rotate(360deg)`, opacity: 0 }
+                    ], {
+                        duration: 3000 + Math.random() * 3000,
+                        easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+                    });
+                    
+                    // Remove after animation
+                    setTimeout(() => {
+                        if (flower.parentNode) {
+                            document.body.removeChild(flower);
+                        }
+                    }, 6000);
+                }, i * 150);
+            }
+        }
+        
+        // Hearts effect
+        function createHearts(count) {
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.classList.add('flower');
+                    heart.innerHTML = '❤';
+                    heart.style.color = '#e84393';
+                    heart.style.fontSize = (1 + Math.random() * 2) + 'rem';
+                    
+                    // Random start position
+                    const startX = Math.random() * window.innerWidth;
+                    heart.style.left = `${startX}px`;
+                    heart.style.top = '-30px';
+                    
+                    document.body.appendChild(heart);
+                    
+                    // Random end position
+                    const endY = window.innerHeight + 50;
+                    const endX = startX + (Math.random() * 100 - 50);
+                    
+                    // Animate falling
+                    heart.animate([
+                        { transform: 'translate(0, 0) rotate(0deg)', opacity: 0.9 },
+                        { transform: `translate(${endX - startX}px, ${endY}px) rotate(360deg)`, opacity: 0 }
+                    ], {
+                        duration: 3000 + Math.random() * 2000,
+                        easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+                    });
+                    
+                    // Remove after animation
+                    setTimeout(() => {
+                        if (heart.parentNode) {
+                            document.body.removeChild(heart);
+                        }
+                    }, 5000);
+                }, i * 200);
+            }
+        }
+        
+        // Special message
+        function showSpecialMessage() {
+            const messages = [
+                "You're the best thing that ever happened to me",
+                "I fall more in love with you every day",
+                "Your smile makes my heart skip a beat",
+                "I cherish every moment with you",
+                "You're my dream come true",
+                "I love you more than words can express"
+            ];
+            
+            const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+            
+            // Create message element
+            const msgElement = document.createElement('div');
+            msgElement.textContent = randomMsg;
+            msgElement.style.position = 'fixed';
+            msgElement.style.top = '50%';
+            msgElement.style.left = '50%';
+            msgElement.style.transform = 'translate(-50%, -50%)';
+            msgElement.style.fontSize = '2rem';
+            msgElement.style.fontFamily = "'Dancing Script', cursive";
+            msgElement.style.color = '#e84393';
+            msgElement.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+            msgElement.style.padding = '20px 40px';
+            msgElement.style.borderRadius = '50px';
+            msgElement.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.2)';
+            msgElement.style.zIndex = '100';
+            msgElement.style.animation = 'pulse 1.5s infinite';
+            document.body.appendChild(msgElement);
+            
+            // Remove after animation
+            setTimeout(() => {
+                msgElement.style.transition = 'all 1s ease';
+                msgElement.style.opacity = '0';
+                setTimeout(() => {
+                    if (msgElement.parentNode) {
+                        document.body.removeChild(msgElement);
+                    }
+                }, 1000);
+            }, 3000);
+        }
+        
+        // Flower page redirect
+        document.getElementById('viewFlower2Btn').addEventListener('click', () => {
+            // Create a beautiful transition
+            const overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.background = 'linear-gradient(45deg, #e84393, #fd79a8)';
+            overlay.style.zIndex = '1000';
+            overlay.style.display = 'flex';
+            overlay.style.justifyContent = 'center';
+            overlay.style.alignItems = 'center';
+            overlay.style.fontSize = '3rem';
+            overlay.style.color = 'white';
+            overlay.style.fontFamily = "'Dancing Script', cursive";
+            overlay.style.opacity = '0';
+            overlay.innerHTML = '<div>Loading your special flowers...</div>';
+            
+            document.body.appendChild(overlay);
+            
+            // Fade in
+            overlay.animate([{opacity: 0}, {opacity: 1}], {
+                duration: 1000,
+                easing: 'ease-in-out'
+            });
+            
+            setTimeout(() => {
+                window.location.href = "flower.html";
+                }, 2000);
+                
+            document.getElementById('back-to-celebration').addEventListener('click', () => {
+                garden.style.opacity = '0';
+                setTimeout(() => {
+                    garden.remove();
+                }, 1000);
+            }); 
+
+        });
+        document.getElementById('viewFlower1Btn').addEventListener('click', () => {
+            // Create a beautiful transition
+            const overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.background = 'linear-gradient(45deg, #e84393, #fd79a8)';
+            overlay.style.zIndex = '1000';
+            overlay.style.display = 'flex';
+            overlay.style.justifyContent = 'center';
+            overlay.style.alignItems = 'center';
+            overlay.style.fontSize = '3rem';
+            overlay.style.color = 'white';
+            overlay.style.fontFamily = "'Dancing Script', cursive";
+            overlay.style.opacity = '0';
+            overlay.innerHTML = '<div>Loading your special flowers...</div>';
+            
+            document.body.appendChild(overlay);
+            
+            // Fade in
+            overlay.animate([{opacity: 0}, {opacity: 1}], {
+                duration: 1000,
+                easing: 'ease-in-out'
+            });
+            
+           setTimeout(() => {
+                // Create flower garden
+                createFlowerGarden();
+                overlay.remove();
+            }, 2000);
+
+        });
+        
+        // Create flower garden
+        function createFlowerGarden() {
+            const garden = document.createElement('div');
+            garden.style.position = 'fixed';
+            garden.style.top = '0';
+            garden.style.left = '0';
+            garden.style.width = '100%';
+            garden.style.height = '100%';
+            garden.style.zIndex = '999';
+            garden.style.background = 'linear-gradient(to bottom, #1a2a6c, #b21f1f)';
+            garden.style.display = 'flex';
+            garden.style.justifyContent = 'center';
+            garden.style.alignItems = 'center';
+            garden.style.flexDirection = 'column';
+            garden.style.color = 'white';
+            garden.style.fontFamily = "'Dancing Script', cursive";
+            garden.style.textAlign = 'center';
+            
+            garden.innerHTML = `
+                <h1 style="font-size: 4rem; margin-bottom: 30px;">For My Beautiful Flower</h1>
+                <p style="font-size: 2rem; max-width: 800px; margin-bottom: 40px;">
+                    Just like these flowers, your beauty brightens my world every day. 
+                    Each petal represents a reason why I love you!
+                </p>
+                <div id="flower-canvas" style="width: 100%; height: 50vh; position: relative;"></div>
+                <button class="skip-btn" id="back-to-celebration" style="margin-top: 40px;">
+                    <i class="fas fa-arrow-left"></i> Back to Celebration
+                </button>
+            `;
+            
+            document.body.appendChild(garden);
+            
+            // Add flowers to canvas
+            const flowerCanvas = document.getElementById('flower-canvas');
+            const flowerIcons = ['🌸', '🌹', '🌺', '🌻', '🌷', '💐'];
+            
+            // Create floating flowers
+            for (let i = 0; i < 30; i++) {
+                const flower = document.createElement('div');
+                flower.innerHTML = flowerIcons[Math.floor(Math.random() * flowerIcons.length)];
+                flower.style.position = 'absolute';
+                flower.style.fontSize = (2 + Math.random() * 3) + 'rem';
+                flower.style.left = Math.random() * 100 + '%';
+                flower.style.top = Math.random() * 100 + '%';
+                flower.style.opacity = '0.8';
+                flower.style.animation = `float ${8 + Math.random() * 8}s infinite ease-in-out`;
+                flower.style.animationDelay = `-${Math.random() * 8}s`;
+                flowerCanvas.appendChild(flower);
+            }
+            
+            // Back button event
+            document.getElementById('back-to-celebration').addEventListener('click', () => {
+                garden.style.opacity = '0';
+                setTimeout(() => {
+                    garden.remove();
+                }, 1000);
+            });
+        }
+        
+        // Event listeners for buttons
+        document.getElementById('fireworksBtn').addEventListener('click', () => createFireworks(30));
+        document.getElementById('flowersBtn').addEventListener('click', () => createFlowers(30));
+        document.getElementById('heartBtn').addEventListener('click', () => createHearts(20));
+        document.getElementById('memoryFireworks').addEventListener('click', () => createFireworks(25));
+        document.getElementById('romanticMessage').addEventListener('click', showSpecialMessage);
+    </script>
+</body>
+</html>
